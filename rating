@@ -1,0 +1,86 @@
+<style>
+ul#ratingUL{
+   background-color: rgba(30, 154, 15, 0.34);
+    height: 34px;
+    width: 25%;
+    padding-top: 11px;
+}
+.MYrating ul li a span{
+    background-color:gray;
+    border-radius: 5px;
+    padding:10px;
+    display: block;
+}
+.MYrating ul li{
+    float:left;
+    margin-right: 5px;
+	text-decoration:none;
+}
+</style>
+<div class="MYrating">     
+    <ul id="ratingUL">
+        <li>Your Rating</li>
+        <li id='rat1' class='ratingNumber'><a href="javascript:void(0)" ><span data-rating='1' data-bgcolour="#cb202d"></span></a></li>
+        <li id='rat2' class='ratingNumber'><a href="javascript:void(0)" ><span data-rating='2' data-bgcolour="#ff7800"></span></a></li>
+        <li id='rat3' class='ratingNumber'><a href="javascript:void(0)" ><span data-rating='3' data-bgcolour="#edd614" ></span></a></li>
+        <li id='rat4' class='ratingNumber'><a href="javascript:void(0)"><span data-rating='4' data-bgcolour="#5ba829"></span></a></li>
+        <li id='rat5' class='ratingNumber'><a href="javascript:void(0)"><span data-rating='5' data-bgcolour="#305d02"></span></a></li>
+        <li style="margin-left: 10px;"><span id="showRtCount"> - </span></li>
+    </ul>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+ //////////////////////// function to set the rating  onmove  //////////////////////
+
+
+    $(".MYrating ul li a span").hover(function(){
+
+        var ratings = $(this).data('rating');      
+       
+        $(this).css("background-color", $(this).data('bgcolour'));
+        $('#showRtCount').html(ratings);
+
+        for(var j= ratings;j >=1;j--){
+            var bgColr = $(".MYrating ul li#rat"+j+" a span").data('bgcolour');                
+             $(".MYrating ul li#rat"+j+" a span").css("background-color",bgColr);
+        }
+
+    });
+
+     //////////////////////// function to reset the rating  after move back  //////////////////////
+
+     $(".MYrating ul li a span").mouseout(function(){
+         var ratings = $(this).data('rating');          
+            if($('ul#ratingUL').hasClass('added')==false){
+                 for(var i= ratings+1;i<=5;i++){                
+                      $(".MYrating ul li#rat"+i+" a span").css("background-color",'gray');
+                 }
+            }
+
+            for(var j= ratings;j >=1;j--){
+              var PrebgColr = $(".MYrating ul li#rat"+j+" a span").data('bgcolour');                
+               $(".MYrating ul li#rat"+j+" a span").css("background-color",PrebgColr);
+             }
+    }); 
+
+     //////////////////////// function to reset the rating  after mouseout //////////////////////
+
+     $( ".MYrating" ).mouseleave(function() {
+        if($('ul#ratingUL').hasClass('added')==false){
+            for(var i= 1;i<=5;i++){                
+                      $(".MYrating ul li#rat"+i+" a span").css("background-color",'gray');
+             }
+        }
+    });
+
+     ///////////////// function to save rating ////////////////////
+
+    $(".MYrating ul li a span").click(function(){
+        $('ul#ratingUL').addClass('added');
+    });
+
+});
+
+</script>
